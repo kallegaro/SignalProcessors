@@ -11,28 +11,35 @@ FIRFilter< Targ >::FIRFilter()
 
 template < typename Targ >
 FIRFilter< Targ >::FIRFilter( int filterSize ) :
-    m_filterSize( filterSize )
+    m_inputArray( new std::deque< Targ > () )
+  , m_coefArray( new std::vector< Targ > () )
   , m_sum( Targ() )
+  , m_coefArrayLoaded( false )
+  , m_filterSize( filterSize )
 {
 
 }
 
 template < typename Targ >
-void FIRFilter< Targ >::addElementAndProcess(const Targ &a)
+Targ FIRFilter<Targ>::addElementAndProcess(const Targ &a)
 {
-    m_inputArray.push_front( a );
+    Targ sum = 0.0f;
 
-    m_sum += a;
+    if( m_coefArrayLoaded ) {
+        if( m_inputArray->size() == m_filterSize ) {
+            m_inputArray->pop_back();
+        }
 
-    if( m_inputArray.size() > m_filterSize ) {
-        Targ &last = m_inputArray.back();
-        m_sum -= last;
-        m_inputArray.pop_back();
+        m_inputArray->push_front( a );
 
-        std::cout << "Ultimo: " << last << std::endl;
+        for ( int i = 0; i < m_inputArray->size(); ++i ) {
+            const Targ &element = m_inputArray->at( i );
+            const Targ &coefElement = m_coefArray->at( i );
+
+            sum += element*coefElement;
+        }
     }
-
-    std::cout << "Soma: " << m_sum << std::endl;
+    return sum;
 }
 
 #endif // FIRFILTER_TPP
