@@ -6,15 +6,23 @@
 
 QT       -= core gui
 
+CONFIG += C++11
+
 TARGET = SignalProcessors
 TEMPLATE = lib
 CONFIG += staticlib
 
 SOURCES += signalprocessors.cpp \
-    firfilter.tpp
+    #firfilter.tpp
+    sinewavegenerator.cpp
 
 HEADERS += signalprocessors.h \
-    firfilter.h
+    firfilter.h \
+    sinewavegenerator.h
+
+OTHER_FILES += \
+    firfilter.tpp
+
 #unix {
 #    target.path = /usr/lib
 #    INSTALLS += target
