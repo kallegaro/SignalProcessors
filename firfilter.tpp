@@ -4,12 +4,6 @@
 #include "firfilter.h"
 
 template < typename Targ >
-FIRFilter< Targ >::FIRFilter()
-{
-
-}
-
-template < typename Targ >
 FIRFilter< Targ >::FIRFilter( int filterSize ) :
     m_inputArray( new std::deque< Targ > () )
   , m_coefArray( new std::vector< Targ > () )

@@ -11,7 +11,8 @@ template < typename Targ >
 class FIRFilter
 {
 public:
-    FIRFilter( );
+    FIRFilter( ) = delete;
+
     FIRFilter( int filterSize );
 
     Targ addElementAndProcess( const Targ & a );
