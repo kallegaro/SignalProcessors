@@ -54,9 +54,13 @@ public:
         }
     }
 
+    void insertFilterCoef( float *coef ) {
+        m_coefArray->assign( coef, coef+m_filterSize );
+    }
+
 private:
     std::unique_ptr < std::deque< Targ > > m_inputArray;        /** An "linked-list", given that elements will be put and removed constantly. The "front" element is the newest one. */
-    std::unique_ptr < std::vector< Targ > > m_coefArray;        /** Given that the coef doesn't change once that they were loaded, this doesn't need to be an linked-list. The front element is the coefficient for the newest input value. */
+    std::unique_ptr < std::vector< float > > m_coefArray;        /** Given that the coef doesn't change once that they were loaded, this doesn't need to be an linked-list. The front element is the coefficient for the newest input value. */
     Targ m_sum;
 
     bool m_coefArrayLoaded;

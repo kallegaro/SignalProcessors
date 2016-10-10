@@ -6,7 +6,7 @@
 template < typename Targ >
 FIRFilter< Targ >::FIRFilter( int filterSize ) :
     m_inputArray( new std::deque< Targ > () )
-  , m_coefArray( new std::vector< Targ > () )
+  , m_coefArray( new std::vector< float > () )
   , m_sum( Targ() )
   , m_coefArrayLoaded( false )
   , m_filterSize( filterSize )
@@ -17,7 +17,7 @@ FIRFilter< Targ >::FIRFilter( int filterSize ) :
 template < typename Targ >
 Targ FIRFilter<Targ>::addElementAndProcess(const Targ &a)
 {
-    Targ sum = 0.0f;
+    Targ sum = Targ();
 
     if( m_coefArrayLoaded ) {
         if( m_inputArray->size() == m_filterSize ) {
@@ -28,9 +28,9 @@ Targ FIRFilter<Targ>::addElementAndProcess(const Targ &a)
 
         for ( int i = 0; i < m_inputArray->size(); ++i ) {
             const Targ &element = m_inputArray->at( i );
-            const Targ &coefElement = m_coefArray->at( i );
+            const float &coefElement = m_coefArray->at( i );
 
-            sum += element*coefElement;
+            sum = sum + element*coefElement;
         }
     }
     return sum;
